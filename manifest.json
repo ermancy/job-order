@@ -1,0 +1,8 @@
+{
+  "name": "Job Order",
+  "short_name": "Job Order",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "messagingSenderId": "597386425563"
+}

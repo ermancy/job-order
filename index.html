@@ -1,0 +1,250 @@
+<!doctype html>
+<!--
+  Copyright 2015 Google Inc. All rights reserved.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+      https://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Bussiness Process Management">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Job Order</title>
+		<!-- Disable tap highlight on IE -->
+        <meta name="msapplication-tap-highlight"content="no">
+		<!-- Web Application Manifest -->
+        <link rel="manifest"href="manifest.json">
+		<!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable"content="yes">
+		<meta name="application-name" content="Job Order">
+		<meta name="theme-color" content="#303F9F">
+		<!-- Add to homescreen for Safari on iOS -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="Job Order">
+		<meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+		<!-- Tile icon for Win8 -->
+        <meta name="msapplication-TileColor" content="#3372DF">
+		<meta name="msapplication-navbutton-color" content="#303F9F">
+		<!-- Material Design Lite -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+		<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script> 
+		<!-- App Styling -->
+        <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+		<link rel="stylesheet" href="styles/main.css">
+	</head>
+	<body>
+		<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+			<!-- Header section containing logo -->
+			<header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+				<div class="mdl-cell mdl-cell--12-col mdl-grid">
+					<div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+						<h3>Friendly Talep</h3>
+					</div>
+				</div>
+				<div class="mdl-cell mdl-cell--12-col mdl-grid"<div id="user-container">
+					<div hidden id="user-pic"></div><div hidden id="user-name"></div>
+					<button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Çıkış</button>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="email-box">
+						<input class="mdl-textfield__input" type="email" id="email">
+						<label class="mdl-textfield__label" for="email">E-Mail</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="password-box">
+						<input class="mdl-textfield__input" type="password" id="password">
+						<label class="mdl-textfield__label" for="email">Password</label>
+					</div>
+					<button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Giriş</button>
+				</div>
+			</header>
+			<main class="mdl-layout__content mdl-color--grey-100">
+				<div id="overlay"></div>
+				<div id="update-form"></div>
+				<div id="orders-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+						<div class="mdl-tabs mdl-js-tabs">
+							<div class="mdl-tabs__tab-bar">
+								<a href="#tab1-panel" class="mdl-tabs__tab is-active">Düzenleme</a>
+								<a href="#tab2-panel" class="mdl-tabs__tab">Liste</a>
+							</div>
+							<div class="mdl-tabs__panel is-active" id="tab1-panel">
+							<!-- Orders container -->
+							<div id="submit-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-cell mdl-color-text--grey-600">
+									<form id="order-form" action="#">
+										<div>
+											<button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+											Gönder
+											</button>
+											<!-- <input id="mediaCapture" type="file" accept="image/*,capture=camera">
+											<button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+											Tasarım Yükleme
+											</button> -->
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="job-order-no">
+											<label class="mdl-textfield__label" for="job-order-no">Sipariş No</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="customer-name">
+											<label class="mdl-textfield__label" for="customer-name">Müşteri Adı</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="order-type">
+											<label class="mdl-textfield__label" for="order-type">Sipariş Cinsi</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="order-size">
+											<label class="mdl-textfield__label" for="order-size">Sipariş Boyutu</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="job-count">
+											<label class="mdl-textfield__label" for="order-count">Sipariş Adeti</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="print-machine">
+											<label class="mdl-textfield__label" for="print-machine">Baskı Makinası</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="plate-type">
+											<label class="mdl-textfield__label" for="plate-type">Kalıp Tipi</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="binding">
+											<label class="mdl-textfield__label" for="binding">Dikiş</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="notes">
+											<label class="mdl-textfield__label" for="notes">Notlar</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="customer-rep">
+											<label class="mdl-textfield__label" for="customer-rep">Müşteri Temsilcisi</label>
+										</div>
+										<div class="content-grid mdl-grid">
+											<div class="mdl-cell mdl-cell--6-col">
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="paper-weight">
+													<label class="mdl-textfield__label" for="paper-weight">Kağıt Ağırlığı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="paper-type">
+													<label class="mdl-textfield__label" for="paper-type">Kağıt Tipi</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="paper-size">
+													<label class="mdl-textfield__label" for="paper-size">Kağıt Boyutu</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="print-size">
+													<label class="mdl-textfield__label" for="print-size">Baskı Boyutu</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="print-count">
+													<label class="mdl-textfield__label" for="print-count">Baskı Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="actual-count">
+													<label class="mdl-textfield__label" for="actual-count">Net Baskı Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="leaf-count">
+													<label class="mdl-textfield__label" for="leaf-count">Forma Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="page-count">
+													<label class="mdl-textfield__label" for="page-count">Sayfa Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="color-count">
+													<label class="mdl-textfield__label" for="color-count">Renk Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="post-application">
+													<label class="mdl-textfield__label" for="post-application">Son Uygulama</label>
+												</div>																																													
+											</div>
+											<div class="mdl-cell mdl-cell--6-col">
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-paper-weight">
+													<label class="mdl-textfield__label" for="cover-paper-weight">Kapak Kağıt Ağırlığı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-paper-type">
+													<label class="mdl-textfield__label" for="cover-paper-type">Kapak Kağıt Tipi</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-paper-size">
+													<label class="mdl-textfield__label" for="cover-paper-size">Kapak Kağıt Boyutu</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-print-size">
+													<label class="mdl-textfield__label" for="cover-print-size">Kapak Baskı Boyutu</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-print-count">
+													<label class="mdl-textfield__label" for="cover-print-count">Kapak Baskı Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-actual-count">
+													<label class="mdl-textfield__label" for="cover-actual-count">Kapak Net Baskı Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-leaf-count">
+													<label class="mdl-textfield__label" for="cover-leaf-count">Kapak Forma Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-page-count">
+													<label class="mdl-textfield__label" for="cover-page-count">Kapak Sayfa Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-color-count">
+													<label class="mdl-textfield__label" for="cover-color-count">Kapak Renk Sayısı</label>
+												</div>
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+													<input class="mdl-textfield__input" type="text" id="cover-post-application">
+													<label class="mdl-textfield__label" for="cover-post-application">Kapak Son Uygulama</label>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="mdl-tabs__panel" id="tab2-panel">
+							<div id="orders-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+									<div id="orders">
+										<span id="order-filler"></div>
+										<span id="order-filler">
+											<div class="jobOrderNo">Sipariş No</div>
+											<div class="customerName">Müşteri Adı</div>
+											<div class="orderType">Müşteri Temsilcisi</div>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
+					<div class="mdl-snackbar__text"></div>
+					<button class="mdl-snackbar__action" type="button"></button>
+				</div>
+			</main>
+		</div>
+		<!-- Import and configure the Firebase SDK -->
+		<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+		<!-- If you do not want to serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+		<script src="/__/firebase/4.1.3/firebase.js"></script>
+		<script src="/__/firebase/init.js"></script>
+		<script src="scripts/main.js"></script>
+	</body>
+</html>
