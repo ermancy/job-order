@@ -62,7 +62,7 @@ function JobOrder() {
 		'<div class="jobOrderNo"></div>' +
 		'<div class="customerName"></div>' +
 		'<div class="orderType"></div>' +
-		'<button class="detailButton mdl-button mdl-js-button mdl-js-ripple-effect">Detay</button>' +
+		'<button class="detailButton mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">Detay</button>' +
 	'</div>';
 
 		// Saves order on form submit.
@@ -150,7 +150,7 @@ JobOrder.prototype.saveOrder = function(e) {
 			coverPostApplication: this.coverPostApplicationInput.value
 		}).then(function() {
 			// Clear order text field and SEND button state.
-			this.resetMaterialTextfield(this.jobOrderNoInput);
+			this.resetMaterialTextFields();
 			this.toggleButton();
 		}.bind(this)).catch(function(error) {
 			console.error('Error writing new order to Firebase Database', error);
@@ -265,10 +265,40 @@ JobOrder.prototype.requestNotificationsPermissions = function() {
 	});
 };
 
-// Resets the given MaterialTextfield.
-JobOrder.prototype.resetMaterialTextfield = function(element) {
-	element.value = '';
-	element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+// Resets the given MaterialTextField.
+JobOrder.prototype.resetMaterialTextFields = function() {
+	//this.querySelector('.mdl-textfield__input').parentNode.MaterialTextField.boundUpdateClassesHandler();
+
+	this.jobOrderNoInput.value ='';
+	this.customerNameInput.value='';
+	this.orderTypeInput.value='';
+	this.orderSizeInput.value='';
+	this.jobCountInput.value='';
+	this.printMachineInput.value='';
+	this.plateTypeInput.value='';
+	this.bindingInput.value='';
+	this.notesInput.value='';
+	this.customerRepInput.value='';
+	this.paperWeightInput.value='';
+	this.paperTypeInput.value='';
+	this.paperSizeInput.value='';
+	this.printSizeInput.value='';
+	this.printCountInput.value='';
+	this.actualCountInput.value='';
+	this.leafCountInput.value='';
+	this.pageCountInput.value='';
+	this.colorCountInput.value='';
+	this.postApplicationInput.value='';
+	this.coverPaperWeightInput.value='';
+	this.coverPaperTypeInput.value='';
+	this.coverPaperSizeInput.value='';
+	this.coverPrintSizeInput.value='';
+	this.coverPrintCountInput.value='';
+	this.coverActualCountInput.value='';
+	this.coverLeafCountInput.value='';
+	this.coverPageCountInput.value='';
+	this.coverColorCountInput.value='';
+	this.coverPostApplicationInput.value='';
 };
 
 // A loading image URL.
