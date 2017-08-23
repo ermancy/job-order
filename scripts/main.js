@@ -62,6 +62,7 @@ function JobOrder() {
 		'<div class="jobOrderNo"></div>' +
 		'<div class="customerName"></div>' +
 		'<div class="orderType"></div>' +
+		'<button class="detailButton mdl-button mdl-js-button mdl-js-ripple-effect">Detay</button>' +
 	'</div>';
 
 		// Saves order on form submit.
@@ -292,7 +293,7 @@ JobOrder.prototype.displayOrder = function(key, jobOrderNo, customerName, orderT
 	div.querySelector('.orderType').textContent = orderType;
 
 	//Click events
-	div.addEventListener('click', function () {
+	div.querySelector('.detailButton').addEventListener('click', function () {
 		console.log('clicked ' + key);
 	});
 	

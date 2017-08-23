@@ -89,16 +89,9 @@ main, #orders-card {
   border-radius: 20px;
 }
 
-.customerName {
-  display: inline-block;
-  /*width: calc(100% - 40px);*/
-  width: 30%;
-  padding: 5px 0 5px 10px;
-}
-
 .jobOrderNo {
   display: inline-block;
-  width: 30%;
+  width: 22%;
   padding-left: 40px;
   color: #bbb;
   font-style: italic;
@@ -106,10 +99,24 @@ main, #orders-card {
   box-sizing: border-box;
 }
 
+.customerName {
+  display: inline-block;
+  /*width: calc(100% - 40px);*/
+  width: 24%;
+  padding: 5px 0 5px 10px;
+}
+
 .orderType {
   display: inline-block;
   /*width: calc(100% - 40px);*/
-  width: 30%;
+  width: 23%;
+  padding: 5px 0 5px 10px;
+}
+
+.detailButton {
+  display: inline-block;
+  /*width: calc(100% - 40px);*/
+  width: 23%;
   padding: 5px 0 5px 10px;
 }
 
