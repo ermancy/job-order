@@ -60,6 +60,7 @@ function JobOrder() {
 	this.ORDER_TEMPLATE =
 	'<div class="order-container">' +
 		'<div class="jobOrderNo"></div>' +
+		'<div class="jobOrderDate"></div>' +
 		'<div class="customerName"></div>' +
 		'<div class="orderType"></div>' +
 		'<button class="detailButton mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">Detay</button>' +
@@ -100,12 +101,12 @@ JobOrder.prototype.loadOrders = function() {
 	// Loads the last 12 orders and listen for new ones.
 	var setOrder = function(data) {
 		var val = data.val();
-		this.displayOrder(data.key, val.jobOrderNo, val.customerName, val.orderType);
+		this.displayOrder(data.key, val.jobOrderDate, val.jobOrderNo, val.customerName, val.orderType);
 	}.bind(this);
-//	this.ordersRef.limitToLast(12).on('child_added', setOrder);
-//	this.ordersRef.limitToLast(12).on('child_changed', setOrder);
-	this.ordersRef.on('child_added', setOrder);
-	this.ordersRef.on('child_changed', setOrder);
+	this.ordersRef.limitToLast(12).on('child_added', setOrder);
+	this.ordersRef.orderByChild('jobOrderDate').limitToLast(12).on('child_changed', setOrder);
+//	this.ordersRef.on('child_added', setOrder);
+//	this.ordersRef.on('child_changed', setOrder);
 };
 
 // Saves a new order on the Firebase DB.
@@ -118,6 +119,7 @@ JobOrder.prototype.saveOrder = function(e) {
 		// Add a new order entry to the Firebase Database.
 		this.ordersRef.push({
 			owner: currentUser.email,
+			jobOrderDate : Date.now(),
 			jobOrderNo: this.jobOrderNoInput.value,
 			customerName: this.customerNameInput.value,
 			orderType: this.orderTypeInput.value,
@@ -150,7 +152,7 @@ JobOrder.prototype.saveOrder = function(e) {
 			coverPostApplication: this.coverPostApplicationInput.value
 		}).then(function() {
 			// Clear order text field and SEND button state.
-			this.resetMaterialTextFields();
+			this.resetMaterialTextfield();
 			this.toggleButton();
 		}.bind(this)).catch(function(error) {
 			console.error('Error writing new order to Firebase Database', error);
@@ -265,40 +267,71 @@ JobOrder.prototype.requestNotificationsPermissions = function() {
 	});
 };
 
-// Resets the given MaterialTextField.
-JobOrder.prototype.resetMaterialTextFields = function() {
+// Resets the given MaterialTextfield.
+JobOrder.prototype.resetMaterialTextfield = function() {
 	//this.querySelector('.mdl-textfield__input').parentNode.MaterialTextField.boundUpdateClassesHandler();
 
-	this.jobOrderNoInput.value ='';
+	this.jobOrderNoInput.value='';
+	this.jobOrderNoInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.customerNameInput.value='';
+	this.customerNameInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.orderTypeInput.value='';
+	this.orderTypeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.orderSizeInput.value='';
+	this.orderSizeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.jobCountInput.value='';
+	this.jobCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.printMachineInput.value='';
+	this.printMachineInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.plateTypeInput.value='';
+	this.plateTypeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.bindingInput.value='';
+	this.bindingInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.notesInput.value='';
+	this.notesInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.customerRepInput.value='';
+	this.customerRepInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.paperWeightInput.value='';
+	this.paperWeightInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.paperTypeInput.value='';
+	this.paperTypeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.paperSizeInput.value='';
+	this.paperSizeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.printSizeInput.value='';
+	this.printSizeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.printCountInput.value='';
+	this.printCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.actualCountInput.value='';
+	this.actualCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.leafCountInput.value='';
+	this.leafCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.pageCountInput.value='';
+	this.pageCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.colorCountInput.value='';
+	this.colorCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.postApplicationInput.value='';
+	this.postApplicationInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverPaperWeightInput.value='';
+	this.coverPaperWeightInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverPaperTypeInput.value='';
+	this.coverPaperTypeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverPaperSizeInput.value='';
+	this.coverPaperSizeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverPrintSizeInput.value='';
+	this.coverPrintSizeInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverPrintCountInput.value='';
+	this.coverPrintCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverActualCountInput.value='';
+	this.coverActualCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverLeafCountInput.value='';
+	this.coverLeafCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverPageCountInput.value='';
+	this.coverPageCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverColorCountInput.value='';
+	this.coverColorCountInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 	this.coverPostApplicationInput.value='';
+	this.coverPostApplicationInput.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+
 };
 
 // A loading image URL.
@@ -307,7 +340,7 @@ JobOrder.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 
 // Displays a Order in the UI.
-JobOrder.prototype.displayOrder = function(key, jobOrderNo, customerName, orderType) {
+JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, customerName, orderType) {
 	var div = document.getElementById(key);
 	// If an element for that order does not exists yet we create it.
 	if (!div) {
@@ -318,6 +351,10 @@ JobOrder.prototype.displayOrder = function(key, jobOrderNo, customerName, orderT
 		this.orderList.appendChild(div);
 	}
 
+	var dateFormatted = new Date(jobOrderDate);
+
+//	div.querySelector('.jobOrderDate').textContent = dateFormatted.getDate() + '.' + dateFormatted.getMonth() + '.' + dateFormatted.getFullYear() + ' - ' + dateFormatted.getHours() + ':' + dateFormatted.getMinutes();
+	div.querySelector('.jobOrderDate').textContent = dateFormatted.toLocaleString();
 	div.querySelector('.jobOrderNo').textContent = jobOrderNo;
 	div.querySelector('.customerName').textContent = customerName;
 	div.querySelector('.orderType').textContent = orderType;

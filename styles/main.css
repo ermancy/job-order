@@ -56,12 +56,20 @@ main, #orders-card {
   margin-bottom: 10px;
   height: calc(100% - 80px);
 }
+
 #order-filler {
+  margin-top: 10px;
+  padding-top: 10px;
   flex-grow: 1;
   color: #ff9800;
 }
 
 #order-filler .jobOrderNo{
+  /*flex-grow: 1;*/
+  color: #ff9800;
+}
+
+#order-filler .jobOrderDate{
   flex-grow: 1;
   color: #ff9800;
 }
@@ -91,8 +99,18 @@ main, #orders-card {
 
 .jobOrderNo {
   display: inline-block;
-  width: 22%;
-  padding-left: 40px;
+  width: 15%;
+  padding-left: 20px;
+  color: #bbb;
+  font-style: italic;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.jobOrderDate {
+  display: inline-block;
+  width: 15%;
+  padding-left: 20px;
   color: #bbb;
   font-style: italic;
   font-size: 12px;
@@ -101,19 +119,19 @@ main, #orders-card {
 
 .customerName {
   display: inline-block;
-  width: 24%;
+  width: 22%;
   padding: 5px 0 5px 10px;
 }
 
 .orderType {
   display: inline-block;
-  width: 23%;
+  width: 22%;
   padding: 5px 0 5px 10px;
 }
 
 .detailButton {
   display: inline-block;
-  width: 23%;
+  width: 22%;
 }
 
 #order-form {
