@@ -71,10 +71,26 @@
 				<div id="orders-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
 						<div class="mdl-tabs mdl-js-tabs">
 							<div class="mdl-tabs__tab-bar">
-								<a href="#tab1-panel" class="mdl-tabs__tab is-active">Düzenleme</a>
-								<a href="#tab2-panel" class="mdl-tabs__tab">Liste</a>
+								<a href="#tab2-panel" class="mdl-tabs__tab is-active">Liste</a>
+								<a href="#tab1-panel" class="mdl-tabs__tab">Düzenleme</a>
 							</div>
-							<div class="mdl-tabs__panel is-active" id="tab1-panel">
+							
+						<div class="mdl-tabs__panel is-active" id="tab1-panel">
+							<div id="orders-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+									<div id="orders">
+										<div id="order-filler">
+											<div class="jobOrderNo">Sipariş No</div>
+											<div class="jobOrderDate">Sipariş Tarihi</div>
+											<div class="customerName">Müşteri Adı</div>
+											<div class="orderType">Müşteri Temsilcisi</div>
+											<div class="detailButton"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mdl-tabs__panel" id="tab2-panel">
 							<!-- Orders container -->
 							<div id="submit-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
 								<div class="mdl-card__supporting-text mdl-cell mdl-color-text--grey-600">
@@ -215,21 +231,6 @@
 											</div>
 										</div>
 									</form>
-								</div>
-							</div>
-						</div>
-						<div class="mdl-tabs__panel" id="tab2-panel">
-							<div id="orders-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-								<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-									<div id="orders">
-										<div id="order-filler">
-											<div class="jobOrderNo">Sipariş No</div>
-											<div class="jobOrderDate">Sipariş Tarihi</div>
-											<div class="customerName">Müşteri Adı</div>
-											<div class="orderType">Müşteri Temsilcisi</div>
-											<div class="detailButton"></div>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
