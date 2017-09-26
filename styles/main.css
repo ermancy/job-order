@@ -54,6 +54,7 @@ main, #orders-card {
 #orders {
   overflow-y: auto;
   margin-bottom: 10px;
+  padding-bottom: 10px;
   height: calc(100% - 80px);
 }
 
@@ -109,7 +110,7 @@ main, #orders-card {
 
 .jobOrderDate {
   display: inline-block;
-  width: 15%;
+  width: 25%;
   padding-left: 20px;
   color: #bbb;
   font-style: italic;
@@ -131,7 +132,7 @@ main, #orders-card {
 
 .detailButton {
   display: inline-block;
-  width: 22%;
+  width: 12%;
 }
 
 #order-form {

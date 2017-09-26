@@ -56,6 +56,8 @@ function JobOrder() {
 
 	this.tab1Panel = document.getElementById('tab1-panel');
 	this.tab2Panel = document.getElementById('tab2-panel');
+	this.tab1Button = document.getElementById('tab1-button');
+	this.tab2Button = document.getElementById('tab2-button');
 
 	this.ORDER_TEMPLATE =
 	'<div class="order-container">' +
@@ -66,7 +68,7 @@ function JobOrder() {
 		'<button class="detailButton mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">Detay</button>' +
 	'</div>';
 
-		// Saves order on form submit.
+	// Saves order on form submit.
 	this.orderForm.addEventListener('submit', this.saveOrder.bind(this));
 
 	this.signOutButton.addEventListener('click', this.signOut.bind(this));
@@ -103,10 +105,8 @@ JobOrder.prototype.loadOrders = function() {
 		var val = data.val();
 		this.displayOrder(data.key, val.jobOrderDate, val.jobOrderNo, val.customerName, val.orderType);
 	}.bind(this);
-	this.ordersRef.limitToLast(12).on('child_added', setOrder);
-	this.ordersRef.orderByChild('jobOrderDate').limitToLast(12).on('child_changed', setOrder);
-//	this.ordersRef.on('child_added', setOrder);
-//	this.ordersRef.on('child_changed', setOrder);
+	this.ordersRef.orderByChild('jobOrderDateDesc').limitToLast(12).on('child_added', setOrder);
+	this.ordersRef.orderByChild('jobOrderDateDesc').limitToLast(12).on('child_changed', setOrder);
 };
 
 // Saves a new order on the Firebase DB.
@@ -116,10 +116,22 @@ JobOrder.prototype.saveOrder = function(e) {
 	if (this.jobOrderNoInput.value && this.checkSignedInWithMessage()) {
 
 		var currentUser = this.auth.currentUser;
+		
+		var date2100 = new Date();
+		date2100.setFullYear(2100, 0, 1);
+
+		var dateNow = new Date.now();
+
+		var dateDesc = new Date();
+		dateDesc = dateDesc - dateNow;
+		
+		console.log(date2100 + ' - ' + dateDesc);
+
 		// Add a new order entry to the Firebase Database.
 		this.ordersRef.push({
 			owner: currentUser.email,
 			jobOrderDate : Date.now(),
+			jobOrderDateDesc : dateDesc,
 			jobOrderNo: this.jobOrderNoInput.value,
 			customerName: this.customerNameInput.value,
 			orderType: this.orderTypeInput.value,
@@ -153,6 +165,7 @@ JobOrder.prototype.saveOrder = function(e) {
 		}).then(function() {
 			// Clear order text field and SEND button state.
 			this.resetMaterialTextfield();
+			this.toggleTabs();
 			this.toggleButton();
 		}.bind(this)).catch(function(error) {
 			console.error('Error writing new order to Firebase Database', error);
@@ -337,8 +350,6 @@ JobOrder.prototype.resetMaterialTextfield = function() {
 // A loading image URL.
 JobOrder.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
-
-
 // Displays a Order in the UI.
 JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, customerName, orderType) {
 	var div = document.getElementById(key);
@@ -353,7 +364,6 @@ JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, custom
 
 	var dateFormatted = new Date(jobOrderDate);
 
-//	div.querySelector('.jobOrderDate').textContent = dateFormatted.getDate() + '.' + dateFormatted.getMonth() + '.' + dateFormatted.getFullYear() + ' - ' + dateFormatted.getHours() + ':' + dateFormatted.getMinutes();
 	div.querySelector('.jobOrderDate').textContent = dateFormatted.toLocaleString();
 	div.querySelector('.jobOrderNo').textContent = jobOrderNo;
 	div.querySelector('.customerName').textContent = customerName;
@@ -370,9 +380,55 @@ JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, custom
 	this.jobOrderNoInput.focus();
 };
 
+JobOrder.prototype.updateOrder = function(key) {
+	var updates = {};
+	updates['/orders/' + key] = {
+		owner: currentUser.email,
+		jobOrderNo: this.jobOrderNoInput.value,
+		customerName: this.customerNameInput.value,
+		orderType: this.orderTypeInput.value,
+		orderSize: this.orderSizeInput.value,
+		jobCount: this.jobCountInput.value,
+		printMachine: this.printMachineInput.value,
+		plateType: this.plateTypeInput.value,
+		binding: this.bindingInput.value,
+		notes: this.notesInput.value,
+		customerRep: this.customerRepInput.value,
+		paperWeight: this.paperWeightInput.value,
+		paperType: this.paperTypeInput.value,
+		paperSize: this.paperSizeInput.value,
+		printSize: this.printSizeInput.value,
+		printCount: this.printCountInput.value,
+		actualCount: this.actualCountInput.value,
+		leafCount: this.leafCountInput.value,
+		pageCount: this.pageCountInput.value,
+		colorCount: this.colorCountInput.value,
+		postApplication: this.postApplicationInput.value,
+		coverPaperWeight: this.coverPaperWeightInput.value,
+		coverPaperType: this.coverPaperTypeInput.value,
+		coverPaperSize: this.coverPaperSizeInput.value,
+		coverPrintSize: this.coverPrintSizeInput.value,
+		coverPrintCount: this.coverPrintCountInput.value,
+		coverActualCount: this.coverActualCountInput.value,
+		coverLeafCount: this.coverLeafCountInput.value,
+		coverPageCount: this.coverPageCountInput.value,
+		coverColorCount: this.coverColorCountInput.value,
+		coverPostApplication: this.coverPostApplicationInput.value
+	};
+	
+	this.ordersRef.update(updates).then(function() {
+		// Clear order text field and SEND button state.
+		this.resetMaterialTextfield();
+		this.toggleTabs();
+	}.bind(this)).catch(function(error) {
+		console.error('Error writing new order to Firebase Database', error);
+	});
+	
+};
+
 JobOrder.prototype.detailOrder = function(key) {
 
-}
+};
 
 // Enables or disables the submit button depending on the values of the input
 // fields.
@@ -385,10 +441,16 @@ JobOrder.prototype.toggleButton = function() {
 };
 
 JobOrder.prototype.toggleTabs = function() {
-	if (this.jobOrderNoInput.value) {
-		this.submitButton.removeAttribute('disabled');
+	if (this.tab1Button.classList.contains('is-active')) {
+		this.tab1Button.classList.remove('is-active');
+		this.tab1Panel.classList.remove('is-active');
+		this.tab2Button.classList.add('is-active');
+		this.tab2Panel.classList.add('is-active');
 	} else {
-		this.submitButton.setAttribute('disabled', 'true');
+		this.tab1Button.classList.add('is-active');
+		this.tab1Panel.classList.add('is-active');
+		this.tab2Button.classList.remove('is-active');
+		this.tab2Panel.classList.remove('is-active');
 	}
 };
 
