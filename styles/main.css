@@ -25,7 +25,14 @@ main, #orders-card {
   height: calc(100% - 150px);
   padding-bottom: 0;
 }
+#stocks-card-container {
+  height: calc(100% - 150px);
+  padding-bottom: 0;
+}
 #orders-card {
+  margin-top: 15px;
+}
+#stocks-card {
   margin-top: 15px;
 }
 .mdl-layout__header-row span {
@@ -60,13 +67,13 @@ main, #orders-card {
 
 #order-filler {
   margin-top: 10px;
-  padding-top: 10px;
+/*  padding-top: 10px;*/
   flex-grow: 1;
   color: #ff9800;
 }
 
 #order-filler .jobOrderNo{
-  /*flex-grow: 1;*/
+  flex-grow: 1;
   color: #ff9800;
 }
 
@@ -100,9 +107,9 @@ main, #orders-card {
 
 .jobOrderNo {
   display: inline-block;
-  width: 15%;
-  padding-left: 20px;
-  color: #bbb;
+  width: 12%;
+/*  padding-left: 20px;*/
+  color: #9E9E9E;
   font-style: italic;
   font-size: 12px;
   box-sizing: border-box;
@@ -110,9 +117,9 @@ main, #orders-card {
 
 .jobOrderDate {
   display: inline-block;
-  width: 25%;
-  padding-left: 20px;
-  color: #bbb;
+  width: 18%;
+/*  padding-left: 20px;*/
+  color: #9E9E9E;
   font-style: italic;
   font-size: 12px;
   box-sizing: border-box;
@@ -120,22 +127,126 @@ main, #orders-card {
 
 .customerName {
   display: inline-block;
-  width: 22%;
-  padding: 5px 0 5px 10px;
+  width: 16%;
+/*  padding: 5px 0 5px 10px;*/
+}
+
+.customerRep {
+  display: inline-block;
+  width: 20%;
+/*  padding: 5px 0 5px 10px;*/
 }
 
 .orderType {
   display: inline-block;
-  width: 22%;
-  padding: 5px 0 5px 10px;
+  width: 16%;
+/*  padding: 5px 0 5px 10px;*/
 }
 
 .detailButton {
   display: inline-block;
-  width: 12%;
+  width: 16%;
 }
 
 #order-form {
+  flex-direction: row;
+  width: 100%;
+  float: left;
+}
+
+#stocks {
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  height: calc(100% - 80px);
+}
+#stock-filler {
+  margin-top: 10px;
+/*  padding-top: 10px;*/
+  flex-grow: 1;
+  color: #ff9800;
+}
+
+#stock-filler .stockNo{
+  flex-grow: 1;
+  color: #ff9800;
+}
+
+#stock-filler .stockJobOrderNo{
+  flex-grow: 1;
+  color: #ff9800;
+}
+
+.stock-container:first-of-type {
+  border-top-width: 0;
+}
+.stock-container {
+  display: block;
+  margin-top: 10px;
+  border-top: 1px solid #f3f3f3;
+  padding-top: 10px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.stock-container.visible {
+  opacity: 1;
+}
+
+.stockNo {
+  display: inline-block;
+  width: 12%;
+/*  padding-left: 20px;*/
+  color: #9E9E9E;
+  font-style: italic;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.stockJobOrderNo {
+  display: inline-block;
+  width: 12%;
+/*  padding-left: 20px;*/
+  color: #9E9E9E;
+  font-style: italic;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.paperType {
+  display: inline-block;
+  width: 12%;
+}
+
+.paperCount {
+  display: inline-block;
+  width: 12%;
+/*  padding: 5px 0 5px 10px;*/
+}
+
+.paperWeight {
+  display: inline-block;
+  width: 12%;
+/*  padding: 5px 0 5px 10px;*/
+}
+
+.paperSize {
+  display: inline-block;
+  width: 12%;
+/*  padding: 5px 0 5px 10px;*/
+}
+
+.paperUnitPrice {
+  display: inline-block;
+  width: 12%;
+/*  padding: 5px 0 5px 10px;*/
+}
+
+.consumeButton {
+  display: inline-block;
+  width: 12%;
+}
+
+#stock-form {
   flex-direction: row;
   width: 100%;
   float: left;
@@ -164,31 +275,23 @@ main, #orders-card {
 }
 #user-container {
   position: absolute;
-  display: flex;
-  flex-direction: row;
-  top: 22px;
-  width: 80%;
-  right: 0;
-  padding-left: 10px;
-  justify-content: flex-end;
-  padding-right: 10px;
-}
-#user-container #user-pic {
-  top: -3px;
-  position: relative;
-  display: inline-block;
-  background-image: url('/images/profile_placeholder.png');
-  background-repeat: no-repeat;
-  width: 40px;
-  height: 40px;
-  background-size: 40px;
-  border-radius: 20px;
+  width: 90%;
+  left: 5%;
+  bottom: 5%;
 }
 #user-container #user-name {
   font-size: 16px;
   line-height: 36px;
   padding-right: 10px;
   padding-left: 20px;
+}
+#sign-in {
+  width: 80%;
+  left: 10%;
+}
+#sign-out {
+  width: 80%;
+  left: 10%;
 }
 #image-form #submitImage {
   width: auto;
@@ -205,30 +308,12 @@ main, #orders-card {
 #mediaCapture {
   display: none;
 }
-@media screen and (max-width: 610px) {
-  header {
-    height: 113px;
-    padding-bottom: 80px !important;
-  }
-  #user-container {
-    top: 72px;
-    background-color: rgb(3,155,229);
-    height: 38px;
-    padding-top: 3px;
-    padding-right: 2px;
-  }
-  #user-container #user-pic {
-    top: 2px;
-    width: 33px;
-    height: 33px;
-    background-size: 33px;
-  }
-}
+
 .mdl-textfield__label:after {
-  background-color: #0288D1;
+  background-color: #ff9800;
 }
 .mdl-textfield--floating-label.is-focused .mdl-textfield__label {
-  color: #0288D1;
+  color: #ff9800;
 }
 
 .mdl-button .material-icons {
@@ -251,18 +336,13 @@ main, #orders-card {
   background: none;
 }
 
-
-
 .active .update-wrapper {
   display: block;
 }
 
-
 .update-wrapper {
-  /*display: none;*/
   display: block;
 }
-
 
 .update {
   padding: 100px 35px 0 35px;
@@ -275,5 +355,19 @@ main, #orders-card {
   right: 0;
   bottom: 0;
   margin-bottom: 8px;
-  padding: 6px 16px;
+}
+
+#job-order-drawer {
+  color: #ff9800;
+  font-size: larger;
+}
+
+.hr1 {
+  border-color: #ff9800;
+}
+
+.hr2 {
+  width:90%;
+  margin-left:5%;
+  border-color: #ff9800;
 }

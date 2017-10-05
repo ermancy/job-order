@@ -9,6 +9,13 @@ function JobOrder() {
 	this.orderForm = document.getElementById('order-form');
 	this.orderList = document.getElementById('orders');
 
+	this.ordersCardContainer = document.getElementById('orders-card-container');
+	this.stocksCardContainer = document.getElementById('stocks-card-container');
+
+	this.jobOrderDrawer = document.getElementById('job-order-drawer');
+	this.stockDrawer = document.getElementById('stock-drawer');
+
+
 	this.jobOrderNoInput = document.getElementById('job-order-no');
 	this.customerNameInput = document.getElementById('customer-name');
 	this.orderTypeInput = document.getElementById('order-type');
@@ -54,18 +61,14 @@ function JobOrder() {
 	this.signOutButton = document.getElementById('sign-out');
 	this.signInSnackbar = document.getElementById('must-signin-snackbar');
 
-	this.tab1Panel = document.getElementById('tab1-panel');
-	this.tab2Panel = document.getElementById('tab2-panel');
-	this.tab1Button = document.getElementById('tab1-button');
-	this.tab2Button = document.getElementById('tab2-button');
-
 	this.ORDER_TEMPLATE =
 	'<div class="order-container">' +
 		'<div class="jobOrderNo"></div>' +
 		'<div class="jobOrderDate"></div>' +
 		'<div class="customerName"></div>' +
+		'<div class="customerRep"></div>' +
 		'<div class="orderType"></div>' +
-		'<button class="detailButton mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">Detay</button>' +
+		'<button class="detailButton mdl-button mdl-js-button mdl-button--raised">Detay</button>' +
 	'</div>';
 
 	// Saves order on form submit.
@@ -73,6 +76,9 @@ function JobOrder() {
 
 	this.signOutButton.addEventListener('click', this.signOut.bind(this));
 	this.signInButton.addEventListener('click', this.signIn.bind(this));
+
+	this.jobOrderDrawer.addEventListener('click', this.toggleDrawer.bind(this));
+	this.stockDrawer.addEventListener('click', this.toggleDrawer.bind(this));
 
 	// Toggle for the button.
 	var buttonTogglingHandler = this.toggleButton.bind(this);
@@ -103,7 +109,7 @@ JobOrder.prototype.loadOrders = function() {
 	// Loads the last 12 orders and listen for new ones.
 	var setOrder = function(data) {
 		var val = data.val();
-		this.displayOrder(data.key, val.jobOrderDate, val.jobOrderNo, val.customerName, val.orderType);
+		this.displayOrder(data.key, val.jobOrderDate, val.jobOrderNo, val.customerName, val.orderType, val.customerRep);
 	}.bind(this);
 	this.ordersRef.orderByChild('jobOrderDateDesc').limitToLast(12).on('child_added', setOrder);
 	this.ordersRef.orderByChild('jobOrderDateDesc').limitToLast(12).on('child_changed', setOrder);
@@ -117,15 +123,13 @@ JobOrder.prototype.saveOrder = function(e) {
 
 		var currentUser = this.auth.currentUser;
 		
-		var date2100 = new Date();
-		date2100.setFullYear(2100, 0, 1);
-
-		var dateNow = new Date.now();
+		var dateNow = Date.now();
+		var date2100 = new Date(2100, 0, 1);
 
 		var dateDesc = new Date();
-		dateDesc = dateDesc - dateNow;
+		dateDesc = date2100.getTime() - dateNow;
 		
-		console.log(date2100 + ' - ' + dateDesc);
+		console.log(date2100.getTime() + ' - ' + dateDesc);
 
 		// Add a new order entry to the Firebase Database.
 		this.ordersRef.push({
@@ -165,7 +169,6 @@ JobOrder.prototype.saveOrder = function(e) {
 		}).then(function() {
 			// Clear order text field and SEND button state.
 			this.resetMaterialTextfield();
-			this.toggleTabs();
 			this.toggleButton();
 		}.bind(this)).catch(function(error) {
 			console.error('Error writing new order to Firebase Database', error);
@@ -193,6 +196,8 @@ JobOrder.prototype.signIn = function() {
 	// Sign in Firebase using popup auth and Google as the identity provider.
 	var provider = new firebase.auth.EmailAuthProvider();
 	this.auth.signInWithEmailAndPassword(this.email.value, this.password.value);
+	this.email.value = '';
+	this.password.value = '';
 };
 
 // Signs-out of Job Order.
@@ -351,7 +356,7 @@ JobOrder.prototype.resetMaterialTextfield = function() {
 JobOrder.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 // Displays a Order in the UI.
-JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, customerName, orderType) {
+JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, customerName, orderType, customerRep) {
 	var div = document.getElementById(key);
 	// If an element for that order does not exists yet we create it.
 	if (!div) {
@@ -367,6 +372,7 @@ JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, custom
 	div.querySelector('.jobOrderDate').textContent = dateFormatted.toLocaleString();
 	div.querySelector('.jobOrderNo').textContent = jobOrderNo;
 	div.querySelector('.customerName').textContent = customerName;
+	div.querySelector('.customerRep').textContent = customerRep;
 	div.querySelector('.orderType').textContent = orderType;
 
 	//Click events
@@ -419,7 +425,6 @@ JobOrder.prototype.updateOrder = function(key) {
 	this.ordersRef.update(updates).then(function() {
 		// Clear order text field and SEND button state.
 		this.resetMaterialTextfield();
-		this.toggleTabs();
 	}.bind(this)).catch(function(error) {
 		console.error('Error writing new order to Firebase Database', error);
 	});
@@ -440,17 +445,23 @@ JobOrder.prototype.toggleButton = function() {
 	}
 };
 
-JobOrder.prototype.toggleTabs = function() {
-	if (this.tab1Button.classList.contains('is-active')) {
-		this.tab1Button.classList.remove('is-active');
-		this.tab1Panel.classList.remove('is-active');
-		this.tab2Button.classList.add('is-active');
-		this.tab2Panel.classList.add('is-active');
+JobOrder.prototype.toggleDrawer = function() {
+	if (this.stocksCardContainer.hasAttribute('hidden')) {
+		this.stocksCardContainer.removeAttribute('hidden');
+		this.ordersCardContainer.setAttribute('hidden', 'true');
+
+		this.stockDrawer.style.color = "#ff9800";
+		this.stockDrawer.style.fontSize = "large";
+		this.jobOrderDrawer.style.color = "#757575";
+		this.jobOrderDrawer.style.fontSize = "larger";
 	} else {
-		this.tab1Button.classList.add('is-active');
-		this.tab1Panel.classList.add('is-active');
-		this.tab2Button.classList.remove('is-active');
-		this.tab2Panel.classList.remove('is-active');
+		this.ordersCardContainer.removeAttribute('hidden');
+		this.stocksCardContainer.setAttribute('hidden', 'true');
+
+		this.jobOrderDrawer.style.color = "#ff9800";
+		this.jobOrderDrawer.style.fontSize = "large";
+		this.stockDrawer.style.color = "#757575";
+		this.stockDrawer.style.fontSize = "larger";
 	}
 };
 

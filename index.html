@@ -60,36 +60,41 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	<body>
-		<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-			<!-- Header section containing logo -->
-			<header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
-				<div class="mdl-cell mdl-cell--12-col mdl-grid">
-					<div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-						<h3>Friendly Talep</h3>
-					</div>
+		 <!-- MDL navigation container -->
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+			<!-- Drawer container -->
+			<div class="mdl-layout__drawer">
+				<span class="mdl-layout-title">MAY Takip</span>
+				<hr class="hr2">
+				<!-- navigation Container, with links -->
+				<nav class="mdl-navigation">
+			 		<a class="mdl-navigation__link" id="job-order-drawer" href="#">İş Emri</a>
+			 		<a class="mdl-navigation__link" id="stock-drawer" href="#">Stok</a>
+			 	</nav>
+				<hr class="hr2">
+			 	<div id="user-container">
+			 		<hr class="hr1">
+			 		<form onSubmit="JobOrder.signIn();" action="#">
+						<div hidden id="user-name"></div>
+						<button hidden id="sign-out" class="mdl-button mdl-js-button">ÇIKIŞ</button>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="email-box">
+							<input class="mdl-textfield__input" type="email" id="email">
+							<label class="mdl-textfield__label" for="email">E-Mail Adresi</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="password-box">
+							<input class="mdl-textfield__input" type="password" id="password">
+							<label class="mdl-textfield__label" for="email">Şifre</label>
+						</div>
+						<button id="sign-in" class="mdl-button mdl-js-button">GİRİŞ</button>
+					</form>
 				</div>
-				<div class="mdl-cell mdl-cell--12-col mdl-grid"<div id="user-container">
-					<div hidden id="user-pic"></div><div hidden id="user-name"></div>
-					<button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Çıkış</button>
-					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="email-box">
-						<input class="mdl-textfield__input" type="email" id="email">
-						<label class="mdl-textfield__label" for="email">E-Mail</label>
-					</div>
-					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="password-box">
-						<input class="mdl-textfield__input" type="password" id="password">
-						<label class="mdl-textfield__label" for="email">Password</label>
-					</div>
-					<button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Giriş</button>
-				</div>
-			</header>
-			<main class="mdl-layout__content mdl-color--grey-100">
-				<div id="overlay"></div>
-				<div id="update-form"></div>
+			</div>
+  			<main class="mdl-layout__content mdl-color--grey-100">
 				<div id="orders-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
 					<div class="mdl-tabs mdl-js-tabs">
 						<div class="mdl-tabs__tab-bar">
-							<a href="#tab1-panel" id="tab1-button" class="mdl-tabs__tab is-active">Liste</a>
-							<a href="#tab2-panel" id="tab2-button" class="mdl-tabs__tab">Düzenleme</a>
+							<a href="#tab1-panel" id="tab1-button" class="mdl-tabs__tab is-active">LİSTE</a>
+							<a href="#tab2-panel" id="tab2-button" class="mdl-tabs__tab">DÜZENLEME</a>
 						</div>
 						<div class="mdl-tabs__panel is-active" id="tab1-panel">
 							<div id="orders-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
@@ -99,7 +104,8 @@
 											<div class="jobOrderNo">Sipariş No</div>
 											<div class="jobOrderDate">Sipariş Tarihi</div>
 											<div class="customerName">Müşteri Adı</div>
-											<div class="orderType">Müşteri Temsilcisi</div>
+											<div class="customerRep">Müşteri Temsilcisi</div>
+											<div class="orderType">Sipariş Cinsi</div>
 											<div class="detailButton"></div>
 										</div>
 									</div>
@@ -115,6 +121,7 @@
 											<button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
 											Gönder
 											</button>
+											<input type="reset" class="mdl-button mdl-js-button" value="TEMİZLE"></input>
 											<!-- <input id="mediaCapture" type="file" accept="image/*,capture=camera">
 											<button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
 											Tasarım Yükleme
@@ -252,8 +259,78 @@
 						</div>
 					</div>
 				</div>
+				<div id="stocks-card-container" hidden class="mdl-cell mdl-cell--12-col mdl-grid">
+					<div class="mdl-tabs mdl-js-tabs">
+						<div class="mdl-tabs__tab-bar">
+							<a href="#stock-tab1-panel" id="stock-tab1-button" class="mdl-tabs__tab">GİRİŞ - ÇIKIŞ</a>
+							<a href="#stock-tab2-panel" id="stock-tab2-button" class="mdl-tabs__tab">LİSTE</a>
+						</div>
+						<div class="mdl-tabs__panel" id="stock-tab1-panel">
+							<div id="stock-in-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-cell mdl-color-text--grey-600">
+									<form id="stock-form" action="#">
+										<div>
+											<button id="stock-submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Gönder</button>
+											<input type="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="TEMİZLE"></input>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="stock-no">
+											<label class="mdl-textfield__label" for="stock-no">Stok No</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="stock-job-order-no">
+											<label class="mdl-textfield__label" for="stock-job-order-no">İş Talep No</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="paper-type">
+											<label class="mdl-textfield__label" for="paper-type">Kağıt Cinsi</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="paper-count">
+											<label class="mdl-textfield__label" for="paper-count">Kağıt Miktarı</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="paper-weight">
+											<label class="mdl-textfield__label" for="paper-weight">Kağıt Gramajı</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="paper-size">
+											<label class="mdl-textfield__label" for="paper-size">Kağıt Ebadı</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="paper-unit-price">
+											<label class="mdl-textfield__label" for="paper-unit-price">Birim Fiyatı</label>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="mdl-tabs__panel" id="stock-tab2-panel">
+							<div id="stocks-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+									<div id="stocks">
+										<div id="stock-filler">
+											<div class="stockNo">Stok No</div>
+											<div class="stockJobOrderkNo">İş Talep No</div>
+											<div class="paperType">Kağıt Cinsi</div>
+											<div class="paperCount">Kağıt Miktarı</div>
+											<div class="paperWeight">Kağıt Gramajı</div>
+											<div class="paperSize">Kağıt Ebadı</div>
+											<div class="paperUnitPrice">Birim Fiyat</div>
+											<div class="consumeButton"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
 					<div class="mdl-snackbar__text"></div>
+					<button class="mdl-snackbar__action" type="button"></button>
+				</div>
+				<div id="error-snackbar" class="mdl-js-snackbar mdl-snackbar">
+					<div class="mdl-snackbar__text">HATA</div>
 					<button class="mdl-snackbar__action" type="button"></button>
 				</div>
 			</main>
