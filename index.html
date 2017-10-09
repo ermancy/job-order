@@ -69,7 +69,7 @@
 				<!-- navigation Container, with links -->
 				<nav class="mdl-navigation">
 			 		<a class="mdl-navigation__link" id="job-order-drawer" href="#">İş Emri</a>
-			 		<a class="mdl-navigation__link" id="stock-drawer" href="#">Stok</a>
+			 		<a class="mdl-navigation__link" id="stocks-drawer" href="#">Stok</a>
 			 	</nav>
 				<hr class="hr2">
 			 	<div id="user-container">
@@ -119,9 +119,11 @@
 									<form id="order-form" action="#">
 										<div>
 											<button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-											Gönder
+											GÖNDER
 											</button>
-											<input type="reset" class="mdl-button mdl-js-button" value="TEMİZLE"></input>
+											<button id="orders-clear" type="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="TEMİZLE">
+											TEMİZLE
+											</button>
 											<!-- <input id="mediaCapture" type="file" accept="image/*,capture=camera">
 											<button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
 											Tasarım Yükleme
@@ -262,64 +264,111 @@
 				<div id="stocks-card-container" hidden class="mdl-cell mdl-cell--12-col mdl-grid">
 					<div class="mdl-tabs mdl-js-tabs">
 						<div class="mdl-tabs__tab-bar">
-							<a href="#stock-tab1-panel" id="stock-tab1-button" class="mdl-tabs__tab">GİRİŞ - ÇIKIŞ</a>
-							<a href="#stock-tab2-panel" id="stock-tab2-button" class="mdl-tabs__tab">LİSTE</a>
+							<a href="#stock-tab1-panel" id="stock-tab2-button" class="mdl-tabs__tab is-active">LİSTE</a>
+							<a href="#stock-tab2-panel" id="stock-tab1-button" class="mdl-tabs__tab">GİRİŞ</a>
+							<a href="#stock-tab3-panel" id="stock-tab3-button" class="mdl-tabs__tab">ÇIKIŞ</a>
 						</div>
-						<div class="mdl-tabs__panel" id="stock-tab1-panel">
+						<div class="mdl-tabs__panel is-active" id="stock-tab1-panel">
+							<div id="stocks-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+									<div id="stocks">
+										<div id="stock-filler">
+											<div class="stockNo">Stok No</div>
+											<div class="stockDate">Stok Tarihi</div>
+											<div class="stockJobOrderNo">İş Talep No</div>
+											<div class="stockPaperType">Kağıt Cinsi</div>
+											<div class="stockPaperCount">Kağıt Miktarı</div>
+											<div class="stockPaperWeight">Kağıt Gramajı</div>
+											<div class="stockPaperSize">Kağıt Ebadı</div>
+											<div class="stockPaperUnitPrice">Birim Fiyat</div>
+											<div class="consumeButton"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mdl-tabs__panel" id="stock-tab2-panel">
 							<div id="stock-in-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
 								<div class="mdl-card__supporting-text mdl-cell mdl-color-text--grey-600">
 									<form id="stock-form" action="#">
 										<div>
-											<button id="stock-submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Gönder</button>
-											<input type="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="TEMİZLE"></input>
+											<button id="stock-submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+											GÖNDER
+											</button>
+											<button id="stocks-clear" type="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="TEMİZLE">
+											TEMİZLE
+											</button>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 											<input class="mdl-textfield__input" type="text" id="stock-no">
 											<label class="mdl-textfield__label" for="stock-no">Stok No</label>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											<input class="mdl-textfield__input" type="text" id="stock-job-order-no">
-											<label class="mdl-textfield__label" for="stock-job-order-no">İş Talep No</label>
+											<input class="mdl-textfield__input" type="text" id="stock-paper-type">
+											<label class="mdl-textfield__label" for="stock-paper-type">Kağıt Cinsi</label>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											<input class="mdl-textfield__input" type="text" id="paper-type">
-											<label class="mdl-textfield__label" for="paper-type">Kağıt Cinsi</label>
+											<input class="mdl-textfield__input" type="text" id="stock-paper-count">
+											<label class="mdl-textfield__label" for="stock-paper-count">Kağıt Miktarı</label>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											<input class="mdl-textfield__input" type="text" id="paper-count">
-											<label class="mdl-textfield__label" for="paper-count">Kağıt Miktarı</label>
+											<input class="mdl-textfield__input" type="text" id="stock-paper-weight">
+											<label class="mdl-textfield__label" for="stock-paper-weight">Kağıt Gramajı</label>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											<input class="mdl-textfield__input" type="text" id="paper-weight">
-											<label class="mdl-textfield__label" for="paper-weight">Kağıt Gramajı</label>
+											<input class="mdl-textfield__input" type="text" id="stock-paper-size">
+											<label class="mdl-textfield__label" for="stock-paper-size">Kağıt Ebadı</label>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											<input class="mdl-textfield__input" type="text" id="paper-size">
-											<label class="mdl-textfield__label" for="paper-size">Kağıt Ebadı</label>
-										</div>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											<input class="mdl-textfield__input" type="text" id="paper-unit-price">
-											<label class="mdl-textfield__label" for="paper-unit-price">Birim Fiyatı</label>
+											<input class="mdl-textfield__input" type="text" id="stock-paper-unit-price">
+											<label class="mdl-textfield__label" for="stock-paper-unit-price">Birim Fiyatı</label>
 										</div>
 									</form>
 								</div>
 							</div>
 						</div>
-						<div class="mdl-tabs__panel" id="stock-tab2-panel">
-							<div id="stocks-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+						<div class="mdl-tabs__panel" id="stock-tab3-panel">
+							<div id="stock-out-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
 								<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-									<div id="stocks">
-										<div id="stock-filler">
-											<div class="stockNo">Stok No</div>
-											<div class="stockJobOrderkNo">İş Talep No</div>
-											<div class="paperType">Kağıt Cinsi</div>
-											<div class="paperCount">Kağıt Miktarı</div>
-											<div class="paperWeight">Kağıt Gramajı</div>
-											<div class="paperSize">Kağıt Ebadı</div>
-											<div class="paperUnitPrice">Birim Fiyat</div>
-											<div class="consumeButton"></div>
+									<form id="consume-form" action="#">
+										<div>
+											<button id="consume-submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+											GÜNCELLE
+											</button>
+											<button id="consume-clear" type="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="TEMİZLE">
+											TEMİZLE
+											</button>
+											<input id="stock-key" hidden></input>
 										</div>
-									</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="consume-date">
+											<label class="mdl-textfield__label" for="consume-date">Stok Tarihi</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="consume-job-order-no">
+											<label class="mdl-textfield__label" for="consume-job-order-no">İş Talep No</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="consume-paper-count">
+											<label class="mdl-textfield__label" for="consume-paper-count">Kağıt Miktarı</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="consume-paper-type">
+											<label class="mdl-textfield__label" for="consume-paper-type">Kağıt Cinsi</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="consume-paper-weight">
+											<label class="mdl-textfield__label" for="consume-paper-weight">Kağıt Gramajı</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="consume-paper-size">
+											<label class="mdl-textfield__label" for="consume-paper-size">Kağıt Ebadı</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="consume-paper-unit-price">
+											<label class="mdl-textfield__label" for="consume-paper-unit-price">Birim Fiyatı</label>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -341,5 +390,7 @@
 		<script src="/__/firebase/4.1.3/firebase.js"></script>
 		<script src="/__/firebase/init.js"></script>
 		<script src="scripts/main.js"></script>
+		<script src="scripts/orders.js"></script>
+		<script src="scripts/stocks.js"></script>
 	</body>
 </html>

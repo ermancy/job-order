@@ -90,12 +90,9 @@ main, #orders-card {
   margin-top: 10px;
   border-top: 1px solid #f3f3f3;
   padding-top: 10px;
-  opacity: 0;
   transition: opacity 1s ease-in-out;
 }
-.order-container.visible {
-  opacity: 1;
-}
+
 .order-container .pic {
   background-image: url('/images/profile_placeholder.png');
   background-repeat: no-repeat;
@@ -172,7 +169,7 @@ main, #orders-card {
   color: #ff9800;
 }
 
-#stock-filler .stockJobOrderNo{
+#stock-filler .stockDate{
   flex-grow: 1;
   color: #ff9800;
 }
@@ -185,16 +182,12 @@ main, #orders-card {
   margin-top: 10px;
   border-top: 1px solid #f3f3f3;
   padding-top: 10px;
-  opacity: 0;
   transition: opacity 1s ease-in-out;
-}
-.stock-container.visible {
-  opacity: 1;
 }
 
 .stockNo {
   display: inline-block;
-  width: 12%;
+  width: 10%;
 /*  padding-left: 20px;*/
   color: #9E9E9E;
   font-style: italic;
@@ -204,7 +197,12 @@ main, #orders-card {
 
 .stockJobOrderNo {
   display: inline-block;
-  width: 12%;
+  width: 10%;
+}
+
+.stockDate {
+  display: inline-block;
+  width: 10%;
 /*  padding-left: 20px;*/
   color: #9E9E9E;
   font-style: italic;
@@ -212,32 +210,32 @@ main, #orders-card {
   box-sizing: border-box;
 }
 
-.paperType {
+.stockPaperType {
   display: inline-block;
-  width: 12%;
+  width: 10%;
 }
 
-.paperCount {
+.stockPaperCount {
   display: inline-block;
-  width: 12%;
+  width: 10%;
 /*  padding: 5px 0 5px 10px;*/
 }
 
-.paperWeight {
+.stockPaperWeight {
   display: inline-block;
-  width: 12%;
+  width: 10%;
 /*  padding: 5px 0 5px 10px;*/
 }
 
-.paperSize {
+.stockPaperSize {
   display: inline-block;
-  width: 12%;
+  width: 10%;
 /*  padding: 5px 0 5px 10px;*/
 }
 
-.paperUnitPrice {
+.stockPaperUnitPrice {
   display: inline-block;
-  width: 12%;
+  width: 10%;
 /*  padding: 5px 0 5px 10px;*/
 }
 
@@ -250,6 +248,28 @@ main, #orders-card {
   flex-direction: row;
   width: 100%;
   float: left;
+}
+
+#stock-form .mdl-textfield {
+  width: calc(100% - 100px);
+}
+#stock-form button, #image-form button {
+  width: 100%;
+  margin: 15px 0 0 10px;
+}
+
+#stock-form {
+  flex-direction: row;
+  width: 100%;
+  float: left;
+}
+
+#consume-form .mdl-textfield {
+  width: calc(100% - 100px);
+}
+#consume-form button, #image-form button {
+  width: 100%;
+  margin: 15px 0 0 10px;
 }
 
 #image-form {
