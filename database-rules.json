@@ -2,7 +2,13 @@
   "rules": {
     "orders": {
       ".read": "auth !== null",
-      ".write": "auth !== null"
+      ".write": "auth !== null",
+	  ".indexOn": "jobOrderDateDesc"
+    },
+	"stocks": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+	  ".indexOn": "stockDateDesc"
     },
     "fcmTokens": {
       "$token": {

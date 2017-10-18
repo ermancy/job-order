@@ -9,6 +9,7 @@ JobOrder.prototype.loadStocks = function() {
 		var val = data.val();
 		this.displayStock(data.key, val.stockNo, val.stockDate, val.stockDateDesc, val.stockJobOrderNo, val.stockPaperType, val.stockPaperCount, val.stockPaperWeight, val.stockPaperSize, val.stockPaperUnitPrice);
 	}.bind(this);
+	
 	this.stocksRef.orderByChild('stockDateDesc').limitToLast(12).on('child_added', setStock);
 	this.stocksRef.orderByChild('stockDateDesc').limitToLast(12).on('child_changed', setStock);
 };
@@ -79,20 +80,18 @@ JobOrder.prototype.displayStock = function(key, stockNo, stockDate, stockDateDes
 		console.log('consumed ' + key);
 		var query = firebase.database().ref('stocks/' + key);
 	
-		query.once("value").then(function(snap){
+		query.once('value').then(function(snap){
 			var data = snap.val();
-			console.log(data);
 
 			var stockDateString = new Date(data.stockDate);
 
 			document.getElementById('stock-key').value = key;
-			document.getElementById('consume-date').value  = stockDateString.toLocaleString();
-			document.getElementById('consume-job-order-no').value = data.stockJobOrderNo;
-			document.getElementById('consume-paper-type').value = data.stockPaperType;
-			document.getElementById('consume-paper-count').value = data.stockPaperCount;
-			document.getElementById('consume-paper-weight').value = data.stockPaperWeight;
-			document.getElementById('consume-paper-size').value = data.stockPaperSize;
-			document.getElementById('consume-paper-unit-price').value = data.stockPaperUnitPrice;
+			document.getElementById('consume-date-div').MaterialTextfield.change(stockDateString.toLocaleString());
+			document.getElementById('consume-paper-type-div').MaterialTextfield.change(data.stockPaperType);
+			document.getElementById('consume-paper-count-div').MaterialTextfield.change(data.stockPaperCount);
+			document.getElementById('consume-paper-weight-div').MaterialTextfield.change(data.stockPaperWeight);
+			document.getElementById('consume-paper-size-div').MaterialTextfield.change(data.stockPaperSize);
+			document.getElementById('consume-paper-unit-price-div').MaterialTextfield.change(data.stockPaperUnitPrice);
 		});
 	
 		document.getElementById('stock-tab1-panel').classList.remove("is-active");
@@ -110,11 +109,11 @@ JobOrder.prototype.displayStock = function(key, stockNo, stockDate, stockDateDes
 
 JobOrder.prototype.updateStock = function() {
 	var key = document.getElementById('stock-key').value;
-	console.log(key);
 	var updates = {};
-	updates[key] = {
-		stockPaperCount: document.getElementById('consume-paper-count').value
-	};
+//	updates[key] = {
+//		stockJobOrderPaperCount: document.getElementById('consume-paper-count').value,
+//		stockJobOrderNo: document.getElementById('consume-job-order-no').value
+//	};
 	
 //	this.stocksRef.update(updates).then(function() {
 //		// Clear order text field and SEND button state.
@@ -123,6 +122,25 @@ JobOrder.prototype.updateStock = function() {
 //		console.error('Error writing new order to Firebase Database', error);
 //	});
 
-	this.database.ref("stocks/" + key).update(updates[key]).catch(function(error) {
-		console.error('Error writing new order to Firebase Database', error)});
+	var stockKey = this.database.ref("stocks/" + key).child("stocksUsed").push().key;
+	var stockCount; 
+	this.database.ref("stocks/" + key).child("stocksUsedCount").once('value').then(function(snap){
+		console.log("snap.val() ->> " + snap.val());
+		stockCount = snap.val();
+		console.log("this.stockCount ->> " + stockCount);
+		updates["/stocksUsedCount"] = (stockCount + document.getElementById('consume-paper-count').value);
+	});
+
+	console.log("stockCount ->> " + stockCount);
+
+	updates["/stocksUsed/" + stockKey] = {
+		stockJobOrderPaperCount: document.getElementById('consume-paper-count').value,
+		stockJobOrderNo: document.getElementById('consume-job-order-no').value
+	};
+//	updates["/stocksUsedCount"] = (stockCount + document.getElementById('consume-paper-count').value);
+
+//	this.database.ref("stocks/" + key).update(updates[key]).catch(function(error) {
+//		console.error('Error writing new order to Firebase Database', error)});
+
+	this.database.ref("stocks/" + key).update(updates);
 };

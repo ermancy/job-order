@@ -1,5 +1,5 @@
 {
-  "name": "friendlychat-codelab",
+  "name": "job-order",
   "description": "Firebase SDK for Cloud Functions codelab",
   "dependencies": {
     "firebase-admin": "^4.1.1",

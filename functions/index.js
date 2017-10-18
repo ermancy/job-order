@@ -14,12 +14,30 @@
  * limitations under the License.
  */
 
-// Note: You will edit this file in the follow up codelab about the Cloud Functions for Firebase.
+//'use strict';
+//
+//const functions = require('firebase-functions');
+//const admin = require('firebase-admin');
+//admin.initializeApp(functions.config().firebase);
+//
+//// Keeps track of the length of the 'stocksUsed' child list in a separate property.
+//exports.sumStockUsed = functions.database.ref('/stocks/{stockid}/stocksUsed/{stocksUsedid}').onWrite(event => {
+//  const collectionRef = event.data.ref.parent;
+//  const countRef = collectionRef.parent.child('stocksUsedCount');
+//  
+//  var stockSum = event.data.ref.child('stockJobOrderPaperCount').once('value');
+//  
+//  console.log(stockSum);
+//
+//  // Return the promise from countRef.transaction() so our function 
+//  // waits for this async event to complete before it exits.
+//  return countRef.transaction(current => {
+//    if (event.data.exists() && !event.data.previous.exists()) {
+//        console.log(current);
+//        return (current + stockSum);
+//    }
+//  }).then(() => {
+//    console.log('Sum updated.');
+//  });
+//});
 
-// TODO(DEVELOPER): Import the Cloud Functions for Firebase and the Firebase Admin modules here.
-
-// TODO(DEVELOPER): Write the addWelcomeMessages Function here.
-
-// TODO(DEVELOPER): Write the blurOffensiveImages Function here.
-
-// TODO(DEVELOPER): Write the sendNotifications Function here.
