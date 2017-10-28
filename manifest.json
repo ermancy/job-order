@@ -4,7 +4,7 @@
 	"start_url": "/index.html",
 	"display": "standalone",
 	"orientation": "portrait",
-	"messagingSenderId": "597386425563",
+	"gcm_sender_id":"103953800507",
 	"icons": [{
 	"src": "\/android-icon-36x36.png",
 	"sizes": "36x36",

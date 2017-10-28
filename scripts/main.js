@@ -7,6 +7,7 @@ function JobOrder() {
 	// Shortcuts to DOM Elements.
 	this.updateForm = document.getElementById('update-form');
 	this.orderForm = document.getElementById('order-form');
+	this.updateForm = document.getElementById('update-form');
 	this.stockForm = document.getElementById('stock-form');
 	this.consumeForm = document.getElementById('consume-form')
 	this.orderList = document.getElementById('orders');
@@ -17,7 +18,6 @@ function JobOrder() {
 
 	this.jobOrderDrawer = document.getElementById('job-order-drawer');
 	this.stockDrawer = document.getElementById('stocks-drawer');
-
 
 	this.jobOrderNoInput = document.getElementById('job-order-no');
 	this.customerNameInput = document.getElementById('customer-name');
@@ -50,6 +50,37 @@ function JobOrder() {
 	this.coverColorCountInput = document.getElementById('cover-color-count');
 	this.coverPostApplicationInput = document.getElementById('cover-post-application');
 	
+	this.jobOrderNoUpdateInput = document.getElementById('job-order-no-update');
+	this.customerNameUpdateInput = document.getElementById('customer-name-update');
+	this.orderTypeUpdateInput = document.getElementById('order-type-update');
+	this.orderSizeUpdateInput = document.getElementById('order-size-update');
+	this.jobCountUpdateInput = document.getElementById('job-count-update');
+	this.printMachineUpdateInput = document.getElementById('print-machine-update');
+	this.plateTypeUpdateInput = document.getElementById('plate-type-update');
+	this.bindingUpdateInput = document.getElementById('binding-update');
+	this.notesUpdateInput = document.getElementById('notes-update');
+	this.customerRepUpdateInput = document.getElementById('customer-rep-update');
+	this.paperWeightUpdateInput = document.getElementById('paper-weight-update');
+	this.paperTypeUpdateInput = document.getElementById('paper-type-update');
+	this.paperSizeUpdateInput = document.getElementById('paper-size-update');
+	this.printSizeUpdateInput = document.getElementById('print-size-update');
+	this.printCountUpdateInput = document.getElementById('print-count-update');
+	this.actualCountUpdateInput = document.getElementById('actual-count-update');
+	this.leafCountUpdateInput = document.getElementById('leaf-count-update');
+	this.pageCountUpdateInput = document.getElementById('page-count-update');
+	this.colorCountUpdateInput = document.getElementById('color-count-update');
+	this.postApplicationUpdateInput = document.getElementById('post-application-update');
+	this.coverPaperWeightUpdateInput = document.getElementById('cover-paper-weight-update');
+	this.coverPaperTypeUpdateInput = document.getElementById('cover-paper-type-update');
+	this.coverPaperSizeUpdateInput = document.getElementById('cover-paper-size-update');
+	this.coverPrintSizeUpdateInput = document.getElementById('cover-print-size-update');
+	this.coverPrintCountUpdateInput = document.getElementById('cover-print-count-update');
+	this.coverActualCountUpdateInput = document.getElementById('cover-actual-count-update');
+	this.coverLeafCountUpdateInput = document.getElementById('cover-leaf-count-update');
+	this.coverPageCountUpdateInput = document.getElementById('cover-page-count-update');
+	this.coverColorCountUpdateInput = document.getElementById('cover-color-count-update');
+	this.coverPostApplicationUpdateInput = document.getElementById('cover-post-application-update');
+	
 	this.stockNoInput = document.getElementById('stock-no');
 	this.stockJobOrderNoInput = document.getElementById('stock-job-order-no');
 	this.stockPaperTypeInput = document.getElementById('stock-paper-type');
@@ -67,10 +98,7 @@ function JobOrder() {
 	this.consumePaperUnitPriceInput = document.getElementById('consume-paper-unit-price');
 
 	this.submitButton = document.getElementById('submit');
-	this.submitImageButton = document.getElementById('submitImage');
-	this.imageForm = document.getElementById('image-form');
-	this.mediaCapture = document.getElementById('mediaCapture');
-	this.userPic = document.getElementById('user-pic');
+	this.clearButton = document.getElementById('orders-clear');
 	this.userName = document.getElementById('user-name');
 	this.email = document.getElementById('email');
 	this.password = document.getElementById('password');
@@ -87,6 +115,10 @@ function JobOrder() {
 	this.stockTab1Button = document.getElementById('stock-tab1-button');
 	this.stockTab2Button = document.getElementById('stock-tab2-button');
 	this.stockTab3Button = document.getElementById('stock-tab3-button');
+	
+	this.stocksClearButton = document.getElementById('stocks-clear');
+	
+	this.updateButton = document.getElementById('update-button');
 
 	this.ORDER_TEMPLATE =
 	'<div class="order-container">' +
@@ -104,6 +136,7 @@ function JobOrder() {
 		'<div class="stockDate"></div>' +
 		'<div class="stockPaperType"></div>' +
 		'<div class="stockPaperCount"></div>' +
+		'<div class="stockPaperLast"></div>' +
 		'<div class="stockPaperWeight"></div>' +
 		'<div class="stockPaperSize"></div>' +
 		'<div class="stockPaperUnitPrice"></div>' +
@@ -112,6 +145,7 @@ function JobOrder() {
 
 	// Saves order on form submit.
 	this.orderForm.addEventListener('submit', this.saveOrder.bind(this));
+	this.updateForm.addEventListener('submit', this.updateOrder.bind(this));
 	
 	// Saves stock on form submit.
 	this.stockForm.addEventListener('submit', this.saveStock.bind(this));
@@ -324,8 +358,8 @@ JobOrder.prototype.resetMaterialTextfield = function() {
 // A loading image URL.
 JobOrder.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
-JobOrder.prototype.toggleDrawer = function() {
-	if (this.stocksCardContainer.hasAttribute('hidden')) {
+JobOrder.prototype.toggleDrawer = function(eventButton) {
+	if (this.stocksCardContainer.hasAttribute('hidden') && (eventButton.target.id == 'stocks-drawer')) {
 		this.stocksCardContainer.removeAttribute('hidden');
 		this.ordersCardContainer.setAttribute('hidden', 'true');
 
@@ -333,7 +367,7 @@ JobOrder.prototype.toggleDrawer = function() {
 		this.stockDrawer.style.fontSize = "large";
 		this.jobOrderDrawer.style.color = "#757575";
 		this.jobOrderDrawer.style.fontSize = "larger";
-	} else {
+	} else if (eventButton.target.id == 'job-order-drawer') {
 		this.ordersCardContainer.removeAttribute('hidden');
 		this.stocksCardContainer.setAttribute('hidden', 'true');
 
