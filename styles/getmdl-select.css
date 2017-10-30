@@ -5,7 +5,7 @@
 }
 
 .getmdl-select.is-focused .mdl-icon-toggle__label {
-    color: #3f51b5
+    color: #ff9800
 }
 
 .getmdl-select .mdl-menu__container {
@@ -22,6 +22,7 @@
 }
 
 .getmdl-select__fix-height .mdl-menu__container {
+	width: 100%;
     overflow-y: auto;
     max-height: 300px !important
 }

@@ -121,14 +121,11 @@ main, #orders-card {
   padding-bottom: 10px;
   height: calc(100% - 80px);
 }
-#stock-filler {
+#stock-filler, #stock-used-filler {
   margin-top: 10px;
   color: #ff9800;
 }
-#stock-filler .stockNo{
-  color: #ff9800;
-}
-#stock-filler .stockDate{
+#stock-filler .stockNo, #stock-filler .stockDate{
   color: #ff9800;
 }
 .stock-container:first-of-type {
@@ -193,8 +190,6 @@ main, #orders-card {
 }
 .mdl-card {
   min-height: 0;
-}
-.mdl-card {
   background: linear-gradient(white, #f9f9f9);
   justify-content: space-between;
 }
@@ -210,11 +205,7 @@ main, #orders-card {
   padding-right: 10px;
   padding-left: 20px;
 }
-#sign-in {
-  width: 80%;
-  left: 10%;
-}
-#sign-out {
+#sign-in, #sign-out {
   width: 80%;
   left: 10%;
 }
@@ -252,4 +243,16 @@ main, #orders-card {
   width:90%;
   margin-left:5%;
   border-color: #ff9800;
+}
+.stockJobOrderNo {
+  display: inline-block;
+  width: 32%;
+}
+.stockJobOrderPaperCount {
+  display: inline-block;
+  width: 32%;
+}
+.stockConsumePaperNotes {
+  display: inline-block;
+  width: 32%;
 }

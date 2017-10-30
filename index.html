@@ -475,22 +475,47 @@
 											</button>
 											<input id="stock-key" hidden></input>
 										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height" id="consume-job-order-no-div">
+											<!--MAKE INPUT READONLY-->
+											<input class="mdl-textfield__input" type="text" id="consume-job-order-no" readonly tabIndex="-1">
+											<label class="mdl-textfield__label" for="consume-job-order-no">İş Talep No</label>
+											<ul for="consume-job-order-no" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" id="consume-job-order-no-list">
+												<li class="mdl-menu__item">Talepler</li>
+												<li class="mdl-menu__item" data-val="Talepler-Data" id="talepler-data">Talepler-Data</li>
+											</ul>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+											<input class="mdl-textfield__input" type="text" id="sample1" readonly tabIndex="-1">
+											<label for="sample1" class="mdl-textfield__label">Country</label>
+											<ul for="sample1" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+												<li class="mdl-menu__item">Germany</li>
+												<li class="mdl-menu__item">Belarus</li>
+												<li class="mdl-menu__item">Russia</li>
+											</ul>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"  id="consume-paper-input-div">
+											<input class="mdl-textfield__input" type="text" id="consume-paper-input">
+											<label class="mdl-textfield__label" for="consume-paper-input">Kullanılacak Miktar</label>
+										</div>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"  id="consume-paper-notes-div">
+											<input class="mdl-textfield__input" type="text" id="consume-paper-notes">
+											<label class="mdl-textfield__label" for="consume-paper-notes">Açıklama</label>
+										</div>
+										<div>
+											<button disabled id="consume-clear" type="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="TEMİZLE">
+											TEMİZLE
+											</button>
+										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="consume-date-div">
 											<input class="mdl-textfield__input" type="text" id="consume-date" disabled>
 											<label class="mdl-textfield__label" for="consume-date">Stok Tarihi</label>
-										</div>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth" id="consume-job-order-no-div">
-											<input class="mdl-textfield__input" type="text" id="consume-job-order-no" readonly>
-											<label class="mdl-textfield__label" for="consume-job-order-no">İş Talep No</label>
-											<ul for="consume-job-order-no" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" id="consume-job-order-no-list">
-											</ul>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"  id="consume-paper-count-div">
 											<input class="mdl-textfield__input" type="text" id="consume-paper-count" disabled>
 											<label class="mdl-textfield__label" for="consume-paper-count">Kağıt Miktarı</label>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"  id="consume-paper-last-div">
-											<input class="mdl-textfield__input" type="text" id="consume-paper-last">
+											<input class="mdl-textfield__input" type="text" id="consume-paper-last" disabled>
 											<label class="mdl-textfield__label" for="consume-paper-last">Kalan Miktar</label>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="consume-paper-type-div">
@@ -509,12 +534,16 @@
 											<input class="mdl-textfield__input" type="text" id="consume-paper-unit-price" disabled>
 											<label class="mdl-textfield__label" for="consume-paper-unit-price">Birim Fiyatı</label>
 										</div>
-										<div>
-											<button disabled id="consume-clear" type="reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" value="TEMİZLE">
-											TEMİZLE
-											</button>
-										</div>
 									</form>
+								</div>
+							</div>
+							<div id="stock-used-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+								<div class="mdl-card__supporting-text mdl-cell mdl-color-text--grey-600">
+									<div id="stocks-used">
+										<div class="stock-container" id="stock-used-filler">
+											<div class="stockJobOrderNo">Talep No</div><div class="stockJobOrderPaperCount">Kullanılan Tabaka</div><div class="stockConsumePaperNotes">Açıklama</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -536,6 +565,6 @@
 		<script src="scripts/orders.js"></script>
 		<script src="scripts/stocks.js"></script>
 		<!--getmdl-select-->   
-		<script src="scripts/getmdl-select.js"></script>
+		<script defer src="scripts/getmdl-select.js"></script>
 	</body>
 </html>

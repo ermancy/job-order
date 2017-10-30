@@ -75,12 +75,9 @@ JobOrder.prototype.displayStock = function(key, stockNo, stockDate, stockDateDes
 	div.querySelector('.stockPaperUnitPrice').textContent = stockPaperUnitPrice;
 	
 	//Click events
-	//div.querySelector('.consumeButton').addEventListener('click', function () {
-	//	console.log('consumed ' + key);
-	//});
 	div.querySelector('.consumeButton').addEventListener('click', function() {
 		console.log('consumed ' + key);
-		var query = firebase.database().ref('stocks/' + key);
+		const query = firebase.database().ref('stocks/' + key);
 	
 		query.once('value').then(function(snap){
 			var data = snap.val();
@@ -100,23 +97,30 @@ JobOrder.prototype.displayStock = function(key, stockNo, stockDate, stockDateDes
 			document.getElementById('consume-paper-size-div').MaterialTextfield.change(data.stockPaperSize);
 			document.getElementById('consume-paper-unit-price-div').MaterialTextfield.change(data.stockPaperUnitPrice);
 			
-//ONCE SELECTEOR MISSING!!!!!
-			firebase.database().ref('orders').orderByChild('jobOrderDateDesc').once('value').then(function(snap){
-				var val = snap.val();
-//				this.displayOrder(data.key, val.jobOrderDate, val.jobOrderNo, val.customerName, val.orderType, val.customerRep);
-				var listElement = document.getElementById('option-' + snap.key);
-				// If an element for that stock does not exists yet we create it.
-				if (!listElement) {
-					var listElement = document.createElement('li');
-					listElement.classList.add('mdl-menu__item');
-					listElement.innerHTML = '<li class="mdl-menu__item"></li>';
-					listElement.setAttribute('id', 'option-' + snap.key);
-					listElement.setAttribute('data-val', val.jobOrderNo);
-					document.getElementById('consume-job-order-no-list').appendChild(listElement);
+			document.getElementById('stocks-used').innerHTML = '<div class="stockJobOrderNo">Talep No</div><div class="stockJobOrderPaperCount">Kullanılan Tabaka</div><div class="stockConsumePaperNotes">Açıklama</div>';
+			firebase.database().ref('stocks/' + key + '/stocksUsed').off();
+			
+			var listUsed = function(snap) {
+				const val = snap.val();
+				
+				var div = document.getElementById(snap.key);
+				// If an element for that order does not exists yet we create it.
+				if (!div) {
+					var container = document.createElement('div');
+					container.innerHTML = JobOrder.STOCK_USED_TEMPLATE;
+					div = container.firstChild;
+					div.setAttribute('id', snap.key);
+					document.getElementById('stocks-used').appendChild(div);
 				}
-			});
+
+				div.querySelector('.stockJobOrderNo').textContent = val.stockJobOrderNo;
+				div.querySelector('.stockJobOrderPaperCount').textContent = val.stockJobOrderPaperCount;
+				div.querySelector('.stockConsumePaperNotes').textContent = val.notes;
+			};
+			firebase.database().ref('stocks/' + key + '/stocksUsed').on('child_added', listUsed);
+			firebase.database().ref('stocks/' + key + '/stocksUsed').on('child_changed', listUsed);
 		});
-	
+		
 		document.getElementById('stock-tab1-panel').classList.remove("is-active");
 		document.getElementById('stock-tab1-button').classList.remove("is-active");
 		
@@ -143,9 +147,9 @@ JobOrder.prototype.updateStock = function() {
 		const stockCount = snap.val();
 		updates["/stocksUsedCount"] = parseInt(stockCount) + parseInt(document.getElementById('consume-paper-last').value);
 		updates["/stocksUsed/" + stockKey] = {
-			stockJobOrderPaperCount: document.getElementById('consume-paper-last').value,
+			stockJobOrderPaperCount: document.getElementById('consume-paper-input').value,
 			stockJobOrderNo: document.getElementById('consume-job-order-no').value,
-			notes: "bir takım açıklamalar"
+			notes: document.getElementById('consume-paper-notes').value
 		};
 		stockToUpdate.update(updates);
 	}).then(function() {
@@ -164,3 +168,4 @@ JobOrder.prototype.updateStock = function() {
 		document.getElementById('consume-clear').setAttribute('disabled', 'true');
 	}).catch(function(error) {console.error('Error:', error)});
 };
+

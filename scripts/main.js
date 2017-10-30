@@ -142,6 +142,15 @@ function JobOrder() {
 		'<div class="stockPaperUnitPrice"></div>' +
 		'<button class="consumeButton mdl-button mdl-js-button mdl-button--raised">Kullan</button>' +
 	'</div>';
+	
+	this.STOCK_USED_TEMPLATE =
+	'<div class="stock-container">' +
+		'<div class="stockJobOrderNo"></div>' +
+		'<div class="stockJobOrderPaperCount"></div>' +
+		'<div class="stockConsumePaperNotes"></div>' +
+	'</div>';
+	
+	this.LIST_TEMPLATE = '<li class="mdl-menu__item"></li>';
 
 	// Saves order on form submit.
 	this.orderForm.addEventListener('submit', this.saveOrder.bind(this));

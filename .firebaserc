@@ -1,7 +1,6 @@
 {
   "projects": {
-    "friendly-chat": "friendly-chat-35d9d",
-    "default": "friendly-chat-35d9d",
+    "default": "job-order-f49cf",
     "job-order": "job-order-f49cf"
   }
 }

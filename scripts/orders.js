@@ -156,6 +156,20 @@ JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, custom
 		document.getElementById('update-clear').removeAttribute('disabled');
 	});
 	
+	var listElement = document.getElementById('option-' + key);
+	// If an element for that stock does not exists yet we create it.
+	if (!listElement) {
+		var listElement = document.createElement('li');
+		listElement.classList.add('mdl-menu__item');
+//		listElement.innerHTML = JobOrder.LIST_TEMPLATE;
+		listElement.textContent = jobOrderNo;
+		listElement.setAttribute('id', 'option-' + key);
+		listElement.setAttribute('data-val', jobOrderNo);
+		listElement.setAttribute('tabIndex', '-1');
+		document.getElementById('consume-job-order-no-list').appendChild(listElement);
+	}
+//	document.getElementById('consume-job-order-no').value = document.getElementById('consume-job-order-no-list').firstChild.value;
+	
 	// Show the card fading-in.
 //	setTimeout(function() {div.classList.add('visible')}, 1);
 	this.orderList.scrollTop = this.orderList.scrollHeight;
