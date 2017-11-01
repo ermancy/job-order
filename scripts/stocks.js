@@ -145,7 +145,9 @@ JobOrder.prototype.updateStock = function() {
  
 	return stockToUpdate.child("stocksUsedCount").once('value').then(function(snap){
 		const stockCount = snap.val();
-		updates["/stocksUsedCount"] = parseInt(stockCount) + parseInt(document.getElementById('consume-paper-last').value);
+		const stocksUC = parseInt(stockCount) + parseInt(document.getElementById('consume-paper-input').value);
+		console.log(stocksUC);
+		updates["/stocksUsedCount"] = stocksUC;
 		updates["/stocksUsed/" + stockKey] = {
 			stockJobOrderPaperCount: document.getElementById('consume-paper-input').value,
 			stockJobOrderNo: document.getElementById('consume-job-order-no').value,

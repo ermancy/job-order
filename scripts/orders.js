@@ -69,6 +69,11 @@ JobOrder.prototype.saveOrder = function(e) {
 			// Clear order text field and SEND button state.
 			this.resetMaterialTextfield();
 			this.toggleButton();
+			document.getElementById('tab2-panel').classList.remove("is-active");
+			document.getElementById('tab1-panel').classList.add("is-active");
+	
+			document.getElementById('tab2-button').classList.remove("is-active");
+			document.getElementById('tab1-button').classList.add("is-active");
 		}.bind(this)).catch(function(error) {
 			console.error('Error writing new order to Firebase Database', error);
 		});
@@ -168,6 +173,8 @@ JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, custom
 		listElement.setAttribute('tabIndex', '-1');
 		document.getElementById('consume-job-order-no-list').appendChild(listElement);
 	}
+	
+	getmdlSelect.init(".getmdl-select");
 //	document.getElementById('consume-job-order-no').value = document.getElementById('consume-job-order-no-list').firstChild.value;
 	
 	// Show the card fading-in.

@@ -134,11 +134,11 @@ function JobOrder() {
 	'<div class="stock-container">' +
 		'<div class="stockNo"></div>' +
 		'<div class="stockDate"></div>' +
+		'<div class="stockPaperWeight"></div>' +
 		'<div class="stockPaperType"></div>' +
+		'<div class="stockPaperSize"></div>' +
 		'<div class="stockPaperCount"></div>' +
 		'<div class="stockPaperLast"></div>' +
-		'<div class="stockPaperWeight"></div>' +
-		'<div class="stockPaperSize"></div>' +
 		'<div class="stockPaperUnitPrice"></div>' +
 		'<button class="consumeButton mdl-button mdl-js-button mdl-button--raised">Kullan</button>' +
 	'</div>';
