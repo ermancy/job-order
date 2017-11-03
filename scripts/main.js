@@ -99,6 +99,7 @@ function JobOrder() {
 
 	this.submitButton = document.getElementById('submit');
 	this.clearButton = document.getElementById('orders-clear');
+	this.cancelButton = document.getElementById('orders-cancel');
 	this.userName = document.getElementById('user-name');
 	this.email = document.getElementById('email');
 	this.password = document.getElementById('password');
@@ -107,14 +108,6 @@ function JobOrder() {
 	this.signInButton = document.getElementById('sign-in');
 	this.signOutButton = document.getElementById('sign-out');
 	this.signInSnackbar = document.getElementById('must-signin-snackbar');
-
-	this.stockTab1Panel = document.getElementById('stock-tab1-panel');
-	this.stockTab2Panel = document.getElementById('stock-tab2-panel');
-	this.stockTab3Panel = document.getElementById('stock-tab3-panel');
-
-	this.stockTab1Button = document.getElementById('stock-tab1-button');
-	this.stockTab2Button = document.getElementById('stock-tab2-button');
-	this.stockTab3Button = document.getElementById('stock-tab3-button');
 	
 	this.stocksClearButton = document.getElementById('stocks-clear');
 	
@@ -144,7 +137,7 @@ function JobOrder() {
 	'</div>';
 	
 	this.STOCK_USED_TEMPLATE =
-	'<div class="stock-container">' +
+	'<div class="stock-used-container">' +
 		'<div class="stockJobOrderNo"></div>' +
 		'<div class="stockJobOrderPaperCount"></div>' +
 		'<div class="stockConsumePaperNotes"></div>' +
@@ -172,6 +165,61 @@ function JobOrder() {
 	var buttonTogglingHandler = this.toggleButton.bind(this);
 	this.jobOrderNoInput.addEventListener('keyup', buttonTogglingHandler);
 	this.jobOrderNoInput.addEventListener('change', buttonTogglingHandler);
+	
+	this.cancelButton.addEventListener('click', function(){
+		document.getElementById('orders-card').removeAttribute('hidden');
+		document.getElementById('submit-card').setAttribute('hidden', 'true');
+		
+		document.getElementById('submit').setAttribute('disabled', 'true');
+		document.getElementById('orders-clear').setAttribute('disabled', 'true');
+		document.getElementById('orders-cancel').setAttribute('disabled', 'true');
+	}.bind(this));
+
+	document.getElementById('update-cancel').addEventListener('click', function(){
+		document.getElementById('orders-card').removeAttribute('hidden');
+		document.getElementById('update-card').setAttribute('hidden', 'true');
+		
+		document.getElementById('update-button').setAttribute('disabled', 'true');
+		document.getElementById('update-clear').setAttribute('disabled', 'true');
+		document.getElementById('update-cancel').setAttribute('disabled', 'true');
+	}.bind(this));
+	
+	document.getElementById('orders-new').addEventListener('click', function(){
+		document.getElementById('orders-card').setAttribute('hidden', 'true');
+		document.getElementById('submit-card').removeAttribute('hidden');
+		
+		document.getElementById('submit').removeAttribute('disabled');
+		document.getElementById('orders-clear').removeAttribute('disabled');
+		document.getElementById('orders-cancel').removeAttribute('disabled');
+	}.bind(this));
+
+	document.getElementById('stocks-new').addEventListener('click', function(){
+		document.getElementById('stocks-card').setAttribute('hidden', 'true');
+		document.getElementById('stock-in-card').removeAttribute('hidden');
+		
+		document.getElementById('stock-submit').removeAttribute('disabled');
+		document.getElementById('stocks-clear').removeAttribute('disabled');
+		document.getElementById('stocks-cancel').removeAttribute('disabled');
+	}.bind(this));
+
+	document.getElementById('stocks-cancel').addEventListener('click', function(){
+		document.getElementById('stocks-card').removeAttribute('hidden');
+		document.getElementById('stock-in-card').setAttribute('hidden', 'true');
+		
+		document.getElementById('stock-submit').setAttribute('disabled', 'true');
+		document.getElementById('stocks-clear').setAttribute('disabled', 'true');
+		document.getElementById('stocks-cancel').setAttribute('disabled', 'true');
+	}.bind(this));
+
+	document.getElementById('consume-cancel').addEventListener('click', function(){
+		document.getElementById('stocks-card').removeAttribute('hidden');
+		document.getElementById('stock-out-card').setAttribute('hidden', 'true');
+		document.getElementById('stock-used-card').setAttribute('hidden', 'true');
+		document.getElementById('stock-info-card').setAttribute('hidden', 'true');
+		
+		document.getElementById('consume-submit').setAttribute('disabled', 'true');
+		document.getElementById('consume-clear').setAttribute('disabled', 'true');
+	}.bind(this));
 
 	this.initFirebase();
 }

@@ -69,11 +69,8 @@ JobOrder.prototype.saveOrder = function(e) {
 			// Clear order text field and SEND button state.
 			this.resetMaterialTextfield();
 			this.toggleButton();
-			document.getElementById('tab2-panel').classList.remove("is-active");
-			document.getElementById('tab1-panel').classList.add("is-active");
-	
-			document.getElementById('tab2-button').classList.remove("is-active");
-			document.getElementById('tab1-button').classList.add("is-active");
+			document.getElementById('orders-card').removeAttribute('hidden');
+			document.getElementById('submit-card').setAttribute('hidden', 'true');
 		}.bind(this)).catch(function(error) {
 			console.error('Error writing new order to Firebase Database', error);
 		});
@@ -151,14 +148,12 @@ JobOrder.prototype.displayOrder = function(key, jobOrderDate, jobOrderNo, custom
 			
 		});
 	
-		document.getElementById('tab1-panel').classList.remove("is-active");
-		document.getElementById('tab3-panel').classList.add("is-active");
-
-		document.getElementById('tab1-button').classList.remove("is-active");
-		document.getElementById('tab3-button').classList.add("is-active");
+		document.getElementById('orders-card').setAttribute('hidden', 'true');
+		document.getElementById('update-card').removeAttribute('hidden');
 		
 		document.getElementById('update-button').removeAttribute('disabled');
 		document.getElementById('update-clear').removeAttribute('disabled');
+		document.getElementById('update-cancel').removeAttribute('disabled');
 	});
 	
 	var listElement = document.getElementById('option-' + key);
@@ -225,11 +220,8 @@ JobOrder.prototype.updateOrder = function() {
 //		document.getElementsByClassName('mdl-textfield input').value = '';
 //		document.getElementsByClassName('mdl-textfield__input').parentNode.MaterialTextfield.boundUpdateClassesHandler();
 		
-		document.getElementById('tab1-panel').classList.add("is-active");
-		document.getElementById('tab1-button').classList.add("is-active");
-		
-		document.getElementById('tab3-panel').classList.remove("is-active");
-		document.getElementById('tab3-button').classList.remove("is-active");
+		document.getElementById('orders-card').setAttribute('hidden', 'true');
+		document.getElementById('update-card').removeAttribute('hidden');
 		
 		document.getElementById('update-button').setAttribute('disabled', 'true');
 		document.getElementById('update-clear').setAttribute('disabled', 'true');
@@ -242,8 +234,10 @@ JobOrder.prototype.toggleButton = function() {
 	if (this.jobOrderNoInput.value) {
 		this.submitButton.removeAttribute('disabled');
 		this.clearButton.removeAttribute('disabled');
+		this.cancelButton.removeAttribute('disabled');
 	} else {
 		this.submitButton.setAttribute('disabled', 'true');
 		this.clearButton.setAttribute('disabled', 'true');
+		this.cancelButton.setAttribute('disabled', 'true');
 	}
 };

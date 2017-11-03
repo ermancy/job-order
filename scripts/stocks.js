@@ -121,11 +121,10 @@ JobOrder.prototype.displayStock = function(key, stockNo, stockDate, stockDateDes
 			firebase.database().ref('stocks/' + key + '/stocksUsed').on('child_changed', listUsed);
 		});
 		
-		document.getElementById('stock-tab1-panel').classList.remove("is-active");
-		document.getElementById('stock-tab1-button').classList.remove("is-active");
-		
-		document.getElementById('stock-tab3-panel').classList.add("is-active");
-		document.getElementById('stock-tab3-button').classList.add("is-active");
+		document.getElementById('stocks-card').setAttribute('hidden', 'true');
+		document.getElementById('stock-out-card').removeAttribute('hidden');
+		document.getElementById('stock-used-card').removeAttribute('hidden');
+		document.getElementById('stock-info-card').removeAttribute('hidden');
 		
 		document.getElementById('consume-submit').removeAttribute('disabled');
 		document.getElementById('consume-clear').removeAttribute('disabled');
@@ -160,11 +159,9 @@ JobOrder.prototype.updateStock = function() {
 //		document.getElementsByClassName('mdl-textfield input').value = '';
 //		document.getElementsByClassName('mdl-textfield__input').parentNode.MaterialTextfield.boundUpdateClassesHandler();
 		
-		document.getElementById('stock-tab1-panel').classList.add("is-active");
-		document.getElementById('stock-tab1-button').classList.add("is-active");
-		
-		document.getElementById('stock-tab3-panel').classList.remove("is-active");
-		document.getElementById('stock-tab3-button').classList.remove("is-active");
+		document.getElementById('stocks-card').setAttribute('hidden', 'true');
+		document.getElementById('stock-out-card').removeAttribute('hidden');
+		document.getElementById('stock-used-card').removeAttribute('hidden');
 		
 		document.getElementById('consume-submit').setAttribute('disabled', 'true');
 		document.getElementById('consume-clear').setAttribute('disabled', 'true');

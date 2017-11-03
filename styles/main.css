@@ -17,16 +17,18 @@
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
-main, #orders-card {
+main {
   height: 100%;
   padding-bottom: 0;
 }
-#orders-card-container, #stocks-card-container {
-  height: calc(100% - 150px);
-  padding-bottom: 0;
-}
 #submit-card, #orders-card, #update-card, #stocks-card, #stock-in-card, #stock-out-card {
+  height: 100%;
+  padding-bottom: 0;
   margin-top: 15px;
+}
+#orders-card-container, #stocks-card-container {
+  /* height: calc(100% - 150px); */
+  padding-bottom: 0;
 }
 .mdl-layout__header-row span {
   margin-left: 15px;
@@ -54,20 +56,12 @@ main, #orders-card {
   overflow-y: auto;
   margin-bottom: 10px;
   padding-bottom: 10px;
-  height: calc(100% - 80px);
+  /*height: calc(100% - 80px);*/
 }
 
 #order-filler {
   margin-top: 10px;
   color: #ff9800;
-}
-
-#order-filler .jobOrderNo, #order-filler .jobOrderDate {
-  color: #ff9800;
-}
-
-.order-container:first-of-type {
-  border-top-width: 0;
 }
 .order-container {
   display: block;
@@ -125,13 +119,13 @@ main, #orders-card {
   margin-top: 10px;
   color: #ff9800;
 }
-#stock-filler .stockNo, #stock-filler .stockDate{
+#stock-filler .stockNo, #stock-filler .stockDate, #order-filler .jobOrderNo, #order-filler .jobOrderDate{
   color: #ff9800;
 }
-.stock-container:first-of-type {
+.stock-container:first-of-type, .stock-used-container:first-of-type, .order-container:first-of-type {
   border-top-width: 0;
 }
-.stock-container {
+.stock-container, .stock-used-container {
   display: block;
   margin-top: 10px;
   border-top: 1px solid #f3f3f3;
@@ -180,8 +174,8 @@ main, #orders-card {
   display: inline-block;
   width: 12%;
 }
-#stock-form button, #order-form button, #consume-form button, #update-form button {
-  width: 98%;
+#stock-form button, #order-form button, #consume-form button, #update-form button, #orders-new, #stocks-new {
+  width: 31%;
   margin: 15px 0 0 10px;
 }
 #consume-form .mdl-textfield, #order-form .mdl-textfield, #update-form .mdl-textfield, #stock-form .mdl-textfield {
@@ -190,7 +184,7 @@ main, #orders-card {
 }
 .mdl-card {
   min-height: 0;
-  background: linear-gradient(white, #f9f9f9);
+  background: linear-gradient(white, #f7f7f7);
   justify-content: space-between;
 }
 #user-container {
